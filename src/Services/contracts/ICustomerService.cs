@@ -1,5 +1,3 @@
-using Backend.Models;
-
 namespace Backend.Services.contracts;
 
 public interface ICustomerService : ICrudService<Customer> {

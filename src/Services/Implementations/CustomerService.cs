@@ -1,7 +1,4 @@
-using Backend.Data;
-using Backend.Models;
-using Backend.Services.contracts;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace Backend.Services.Implementations;
 
