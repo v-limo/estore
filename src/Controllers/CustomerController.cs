@@ -37,9 +37,9 @@ public class CustomerController(ICustomerService customerService) : ControllerBa
 
 
     [HttpPut("{customerId:guid}")]
-    public async Task<ActionResult<Customer>> UpdateCustomer(Guid customerId, Customer Customer)
+    public async Task<ActionResult<Customer>> UpdateCustomer(Guid customerId, Customer customer)
     {
-        if (customerId != Customer.Id || !ModelState.IsValid)
+        if (customerId != customer.Id || !ModelState.IsValid)
             return BadRequest(
                 new
                 {
@@ -49,12 +49,12 @@ public class CustomerController(ICustomerService customerService) : ControllerBa
                 }
             );
 
-        var customer = await customerService.UpdateAsync(customerId, Customer);
-        if (customer is null)
+        var updatedCustomer = await customerService.UpdateAsync(customerId, customer);
+        if (updatedCustomer is null)
             return NotFound(
                 new { Message = "Customer not found so cannot update", CustomerId = customerId }
             );
-        return customer;
+        return updatedCustomer;
     }
 
 

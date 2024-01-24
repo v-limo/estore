@@ -1,7 +1,9 @@
 
+
+
 namespace Backend.Data;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : IdentityDbContext<IdentityUser>
 {
   public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
   {
@@ -13,6 +15,6 @@ public class ApplicationDbContext : DbContext
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
+    base.OnModelCreating(modelBuilder);
   }
 }
-

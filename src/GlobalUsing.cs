@@ -3,5 +3,7 @@ global using Backend.Services.contracts;
 global using Backend.Services.Implementations;
 global using Microsoft.EntityFrameworkCore;
 global using Backend.Models;
-global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

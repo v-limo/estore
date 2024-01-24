@@ -1,5 +1,4 @@
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -12,9 +11,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.AddRouting(options => { options.LowercaseUrls = true; });
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication();
+
 
 builder.Services.AddControllers();
+
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddRouting(options => { options.LowercaseUrls = true; });
+
 
 builder.Services.AddScoped<IProductService, ProductService>();
 
@@ -28,6 +34,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapIdentityApi<IdentityUser>();
 app.MapControllers();
 app.UseHttpsRedirection();
 
