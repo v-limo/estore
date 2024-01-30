@@ -10,6 +10,7 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddCustomAuthorization();
 
 builder.Services.AddAppServices();
+builder.Services.AddCustomIdentity();
 
 builder.Services.AddCustomRouting();
 builder.Services.AddControllers();

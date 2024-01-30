@@ -1,10 +1,8 @@
 namespace Backend.Models;
 
-public class Customer : IdentityUser
+public class Customer
 {
-    [MaxLength(32)]
-    public string Name { get; set; } = string.Empty;
-
+    [MaxLength(32)] public string Name { get; set; } = string.Empty;
     public int Id { get; set; }
     public Role Role { get; set; } = Role.User;
     public IEnumerable<Order> Orders { get; set; }
