@@ -1,40 +1,27 @@
-
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddCustomSwaggerGens();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+builder.Services.AddCustomCors(builder.Environment, builder.Configuration);
+builder.Services.AddAppDbContext(builder.Configuration);
 
-builder.Services.AddAuthorization();
-builder.Services.AddAuthentication();
+builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddCustomAuthorization();
 
+builder.Services.AddAppServices();
 
+builder.Services.AddCustomRouting();
 builder.Services.AddControllers();
-
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddRouting(options => { options.LowercaseUrls = true; });
-
-
-builder.Services.AddScoped<IProductService, ProductService>();
-
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/V1/swagger.json", "App V1"));
 }
 
-app.MapIdentityApi<IdentityUser>();
 app.MapControllers();
 app.UseHttpsRedirection();
 

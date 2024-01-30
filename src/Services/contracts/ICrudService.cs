@@ -1,13 +1,11 @@
-
-
 namespace Backend.Services.contracts;
 
 public interface ICrudService<T>
-    where T : BaseModel
+    where T : class
 {
     Task<List<T>> GetAllAsync();
-    Task<T?> GetByIdAsync(Guid id);
+    Task<T?> GetByIdAsync(int id);
     Task<T?> CreateAsync(T model);
-    Task<T?> UpdateAsync(Guid id, T model);
-    Task<bool> DeleteAsync(Guid id);
+    Task<T?> UpdateAsync(int id, T model);
+    Task<bool> DeleteAsync(int id);
 }

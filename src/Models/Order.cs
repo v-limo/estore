@@ -1,7 +1,10 @@
 namespace Backend.Models;
 
-public class Order : BaseModel
+public class Order
 {
-    public Customer Customer { get; set; } = new Customer();
+    [Key] public int Id { get; set; }
+    public Customer? Customer { get; set; }
     public List<Product> Products { get; set; } = [];
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime UpdatedAt { get; set; } = DateTime.Now;
 }

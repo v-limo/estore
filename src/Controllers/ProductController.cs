@@ -28,18 +28,18 @@ public class ProductController(IProductService productService) : ControllerBase
     }
 
 
-    [HttpGet("{productId:guid}")]
-    public async Task<ActionResult<Product?>> GetProduct(Guid productId)
+    [HttpGet("{productId:int}")]
+    public async Task<ActionResult<Product?>> GetProduct(int productId)
     {
         var product = await productService.GetByIdAsync(productId);
         return product;
     }
 
 
-    [HttpPut("{productId:guid}")]
-    public async Task<ActionResult<Product>> UpdateProduct(Guid productId, Product Product)
+    [HttpPut("{productId:int}")]
+    public async Task<ActionResult<Product>> UpdateProduct(int productId, Product product)
     {
-        if (productId != Product.Id || !ModelState.IsValid)
+        if (productId != product.Id || !ModelState.IsValid)
             return BadRequest(
                 new
                 {
@@ -49,8 +49,8 @@ public class ProductController(IProductService productService) : ControllerBase
                 }
             );
 
-        var product = await productService.UpdateAsync(productId, Product);
-        if (product is null)
+        var updateProduct = await productService.UpdateAsync(productId, product);
+        if (updateProduct is null)
             return NotFound(
                 new { Message = "Product not found so cannot update", ProductId = productId }
             );
@@ -58,8 +58,8 @@ public class ProductController(IProductService productService) : ControllerBase
     }
 
 
-    [HttpDelete("{productId:guid}")]
-    public async Task<ActionResult<bool>> DeleteProduct(Guid productId)
+    [HttpDelete("{productId:int}")]
+    public async Task<ActionResult<bool>> DeleteProduct(int productId)
     {
         var result = await productService.DeleteAsync(productId);
         if (!result)

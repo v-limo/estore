@@ -1,9 +1,7 @@
-
 namespace Backend.Services.Implementations;
 
 public class OrderService : IOrderService
 {
-
     private readonly ApplicationDbContext _context;
 
     public OrderService(ApplicationDbContext context)
@@ -17,13 +15,10 @@ public class OrderService : IOrderService
         return data.Entity;
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(int id)
     {
         var order = await _context.Orders.FindAsync(id);
-        if (order == null)
-        {
-            return false;
-        }
+        if (order == null) return false;
         _context.Orders.Remove(order);
         await _context.SaveChangesAsync();
         return true;
@@ -34,30 +29,26 @@ public class OrderService : IOrderService
         return await _context.Orders.ToListAsync();
     }
 
-    public async Task<List<Order>> GetByCustomerAsync(Guid customerId)
+    public async Task<List<Order>> GetByCustomerAsync(int customerId)
     {
-
         return await _context.Orders.Where(x => x.Id == customerId).ToListAsync();
     }
 
-    public async Task<Order?> GetByIdAsync(Guid id)
+    public async Task<Order?> GetByIdAsync(int id)
     {
         return await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<List<Order>> GetByProductAsync(Guid productId)
+    public async Task<List<Order>> GetByProductAsync(int productId)
     {
         return await _context.Orders.Where(x => x.Id == productId).ToListAsync();
     }
 
-    public async Task<Order?> UpdateAsync(Guid id, Order model)
+    public async Task<Order?> UpdateAsync(int id, Order model)
     {
         var foundOrder = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
 
-        if (foundOrder == null)
-        {
-            return null;
-        }
+        if (foundOrder == null) return null;
 
         foundOrder.Customer = model.Customer;
         foundOrder.Products = model.Products;

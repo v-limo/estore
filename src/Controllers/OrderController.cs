@@ -28,16 +28,16 @@ public class OrderController(IOrderService orderService) : ControllerBase
     }
 
 
-    [HttpGet("{orderId:guid}")]
-    public async Task<ActionResult<Order?>> GetOrder(Guid orderId)
+    [HttpGet("{orderId:int}")]
+    public async Task<ActionResult<Order?>> GetOrder(int orderId)
     {
         var order = await orderService.GetByIdAsync(orderId);
         return order;
     }
 
 
-    [HttpPut("{orderId:guid}")]
-    public async Task<ActionResult<Order>> UpdateOrder(Guid orderId, Order order)
+    [HttpPut("{orderId:int}")]
+    public async Task<ActionResult<Order>> UpdateOrder(int orderId, Order order)
     {
         if (orderId != order.Id || !ModelState.IsValid)
             return BadRequest(
@@ -49,17 +49,17 @@ public class OrderController(IOrderService orderService) : ControllerBase
                 }
             );
 
-        order = await orderService.UpdateAsync(orderId, order);
-        if (order is null)
+        var updateAsync = await orderService.UpdateAsync(orderId, order);
+        if (updateAsync is null)
             return NotFound(
                 new { Message = "Order not found so cannot update", OrderId = orderId }
             );
-        return order;
+        return updateAsync;
     }
 
 
-    [HttpDelete("{orderId:guid}")]
-    public async Task<ActionResult<bool>> DeleteOrder(Guid orderId)
+    [HttpDelete("{orderId:int}")]
+    public async Task<ActionResult<bool>> DeleteOrder(int orderId)
     {
         var result = await orderService.DeleteAsync(orderId);
         if (!result)

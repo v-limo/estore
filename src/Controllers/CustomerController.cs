@@ -10,12 +10,11 @@ public class CustomerController(ICustomerService customerService) : ControllerBa
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        if (customer != null)
-        {
-            var createdCustomer = await customerService.CreateAsync(customer);
+        if (customer == null) return null;
+        var createdCustomer = await customerService.CreateAsync(customer);
 
-            if (createdCustomer != null) return CreatedAtAction(nameof(GetCustomer), new { createdCustomer.Id }, customer);
-        }
+        if (createdCustomer != null)
+            return CreatedAtAction(nameof(GetCustomer), new { createdCustomer.Id }, customer);
 
         return null;
     }
@@ -28,16 +27,16 @@ public class CustomerController(ICustomerService customerService) : ControllerBa
     }
 
 
-    [HttpGet("{customerId:guid}")]
-    public async Task<ActionResult<Customer?>> GetCustomer(Guid customerId)
+    [HttpGet("{customerId:int}")]
+    public async Task<ActionResult<Customer?>> GetCustomer(int customerId)
     {
         var customer = await customerService.GetByIdAsync(customerId);
         return customer;
     }
 
 
-    [HttpPut("{customerId:guid}")]
-    public async Task<ActionResult<Customer>> UpdateCustomer(Guid customerId, Customer customer)
+    [HttpPut("{customerId:int}")]
+    public async Task<ActionResult<Customer>> UpdateCustomer(int customerId, Customer customer)
     {
         if (customerId != customer.Id || !ModelState.IsValid)
             return BadRequest(
@@ -58,8 +57,8 @@ public class CustomerController(ICustomerService customerService) : ControllerBa
     }
 
 
-    [HttpDelete("{customerId:guid}")]
-    public async Task<ActionResult<bool>> DeleteCustomer(Guid customerId)
+    [HttpDelete("{customerId:int}")]
+    public async Task<ActionResult<bool>> DeleteCustomer(int customerId)
     {
         var result = await customerService.DeleteAsync(customerId);
         if (!result)
