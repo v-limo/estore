@@ -8,7 +8,6 @@ public class AuthenticationController : ControllerBase
     private readonly string _secret;
     private readonly UserManager<IdentityUser> _userManager;
     private readonly List<string>? _validAudiences;
-
     private readonly string _validIssuer;
 
     public AuthenticationController(UserManager<IdentityUser> userManager,

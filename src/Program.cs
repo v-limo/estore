@@ -23,7 +23,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/V1/swagger.json", "App V1"));
 }
 
-app.MapControllers();
 app.UseHttpsRedirection();
+app.UseMiddleware<GlobalMiddleWare>();
+app.MapControllers();
 
 app.Run();

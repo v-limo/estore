@@ -14,6 +14,8 @@ global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.OpenApi.Models;
 global using System.IdentityModel.Tokens.Jwt;
 global using Backend.DTOs;
+global using Backend.Middleware;
+global using System.Text.Json;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
