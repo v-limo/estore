@@ -64,6 +64,7 @@ public static class ServiceExtension
         serviceCollection.AddScoped<IProductService, ProductService>();
         serviceCollection.AddScoped<ICustomerService, CustomerService>();
         serviceCollection.AddScoped<IOrderService, OrderService>();
+        serviceCollection.AddScoped<IAuthService, AuthService>();
     }
 
     public static void AddAppDbContext(this IServiceCollection serviceCollection, IConfiguration configuration)
@@ -150,7 +151,16 @@ public static class ServiceExtension
 
     public static void AddCustomIdentity(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddIdentity<ApplicationUser, IdentityRole>()
+        serviceCollection.AddIdentity<ApplicationUser, IdentityRole>(
+                options =>
+                {
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequiredLength = 3;
+                    options.User.RequireUniqueEmail = true;
+                })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
     }

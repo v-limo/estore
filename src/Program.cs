@@ -15,6 +15,8 @@ builder.Services.AddCustomIdentity();
 builder.Services.AddCustomRouting();
 builder.Services.AddControllers();
 
+builder.Services.AddTransient<GlobalErrorMiddleWare>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -24,7 +26,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseMiddleware<GlobalMiddleWare>();
+app.UseMiddleware<GlobalErrorMiddleWare>();
 app.MapControllers();
 
 app.Run();
