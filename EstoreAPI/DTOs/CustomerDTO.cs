@@ -1,4 +1,4 @@
-namespace Backend.DTOs;
+namespace EStoreAPI.DTOs;
 
 public class CustomerDto : IIdentifiable
 {

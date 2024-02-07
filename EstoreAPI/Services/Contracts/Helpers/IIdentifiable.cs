@@ -1,4 +1,4 @@
-namespace Backend.Services.Contracts.Helpers;
+namespace EStoreAPI.Services.Contracts.Helpers;
 
 public interface IIdentifiable
 {

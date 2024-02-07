@@ -1,4 +1,4 @@
-namespace Backend.Services.Implementations;
+namespace EStoreAPI.Services.Implementations;
 
 public class OrderService : CrudService<OrderDto, Order, OrderCreateDto, OrderUpdateDto>, IOrderService
 {

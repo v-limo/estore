@@ -1,4 +1,4 @@
-namespace Backend.Services.Contracts;
+namespace EStoreAPI.Services.Contracts;
 
 public interface IReviewService : ICrudService<ReviewDto, ReviewCreateDto, ReviewUpdateDto>
 {

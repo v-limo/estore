@@ -1,4 +1,4 @@
-// namespace Backend.Controllers;
+// namespace EStoreAPI.Controllers;
 //
 // public class OrderController : CrudController<OrderDto, OrderCreateDto, OrderUpdateDto>
 //

@@ -1,4 +1,4 @@
-namespace Backend.Services.Implementations;
+namespace EStoreAPI.Services.Implementations;
 
 public class ReviewService : CrudService<ReviewDto, Review, ReviewCreateDto, ReviewUpdateDto>, IReviewService
 {

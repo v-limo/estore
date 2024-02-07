@@ -1,4 +1,4 @@
-namespace Backend.Controllers;
+namespace EStoreAPI.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
