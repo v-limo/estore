@@ -62,8 +62,10 @@ public static class ServiceExtension
     public static void AddAppServices(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddScoped<IProductService, ProductService>();
-        serviceCollection.AddScoped<ICustomerService, CustomerService>();
+        serviceCollection.AddScoped<ICategoryService, CategoryService>();
         serviceCollection.AddScoped<IOrderService, OrderService>();
+        serviceCollection.AddScoped<ICustomerService, CustomerService>();
+        serviceCollection.AddScoped<IReviewService, ReviewService>();
         serviceCollection.AddScoped<IAuthService, AuthService>();
     }
 
@@ -83,11 +85,15 @@ public static class ServiceExtension
             configuration.GetSection("BearerAuthentication:ValidAudiences").Get<List<string>>();
         var secret = configuration.GetSection("BearerAuthentication:Secret").Value!;
 
-        serviceCollection.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        serviceCollection.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
             .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateActor = true,
-                ValidateAudience = true,
+                ValidateAudience = false,
                 ValidateIssuer = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
@@ -100,8 +106,8 @@ public static class ServiceExtension
     public static void AddCustomAuthorization(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddAuthorizationBuilder()
-            .AddPolicy("adminPolicy", policyBuilder => { policyBuilder.RequireRole(Role.Admin.ToString()); })
-            .AddPolicy("usersPolicy", policyBuilder => { policyBuilder.RequireRole(Role.User.ToString()); })
+            .AddPolicy("adminPolicy", policyBuilder => policyBuilder.RequireRole(Role.Admin.ToString()))
+            .AddPolicy("usersPolicy", policyBuilder => policyBuilder.RequireRole(Role.User.ToString()))
             .AddPolicy("profile", policyBuilder =>
             {
                 policyBuilder.RequireAuthenticatedUser();
@@ -151,16 +157,17 @@ public static class ServiceExtension
 
     public static void AddCustomIdentity(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddIdentity<ApplicationUser, IdentityRole>(
+        serviceCollection.AddIdentityCore<ApplicationUser>(
                 options =>
                 {
                     options.Password.RequireDigit = true;
-                    options.Password.RequireLowercase = false;
-                    options.Password.RequireUppercase = false;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequiredLength = 3;
+                    options.Password.RequireLowercase = false; //Todo: true
+                    options.Password.RequireUppercase = false; //Todo: true
+                    options.Password.RequireNonAlphanumeric = false; //Todo: true
+                    options.Password.RequiredLength = 3; //Todo: 8
                     options.User.RequireUniqueEmail = true;
                 })
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
     }

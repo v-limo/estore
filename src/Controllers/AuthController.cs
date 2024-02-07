@@ -1,8 +1,6 @@
 namespace Backend.Controllers;
 
-[ApiController]
-[Route("api/v1/[controller]")]
-public class AuthController : ControllerBase
+public class AuthController : ApiControllerBase
 {
     private readonly IAuthService _authService;
 
@@ -11,8 +9,26 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
+    [HttpGet("profile")]
+    [Authorize]
+    [AllowAnonymous]
+    public async Task<IActionResult> Profile()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+        if (userIdClaim is null) return Unauthorized();
+
+        var user = await _authService.GetUserProfileAsync(userIdClaim.Value);
+
+        if (user is null) return Unauthorized();
+
+        return Ok(user);
+    }
+
+
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginRequest request)
+    [AllowAnonymous]
+    public async Task<IActionResult> LoginUser([FromBody] LoginRequest request)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
         var response = await _authService.LoginAsync(request);
@@ -22,23 +38,12 @@ public class AuthController : ControllerBase
 
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register(RegisterRequest request)
+    [AllowAnonymous]
+    public async Task<IActionResult> RegisterUser(RegisterRequest request)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
         var response = await _authService.RegisterAsync(request);
         if (!response.Success) return BadRequest(response);
         return Ok(response);
-    }
-
-    [HttpGet("profile")]
-    [Authorize(Policy = "profile")]
-    public async Task<IActionResult> Profile()
-    {
-        var userClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-
-
-        if (userClaim is null) return NotFound("User not found");
-
-        return Ok(userClaim.Value);
     }
 }

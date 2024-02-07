@@ -1,5 +1,5 @@
 global using Backend.Data;
-global using Backend.Services.contracts;
+global using Backend.Services.Contracts;
 global using Backend.Services.Implementations;
 global using Microsoft.EntityFrameworkCore;
 global using Backend.Models;
@@ -14,9 +14,10 @@ global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.OpenApi.Models;
 global using System.IdentityModel.Tokens.Jwt;
 global using Backend.DTOs;
-global using Backend.DTOs.AuthDTo;
 global using Backend.Middleware;
 global using System.Text.Json;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using AutoMapper;
+global using Backend.Services.Contracts.Helpers;

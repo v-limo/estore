@@ -1,19 +1,26 @@
 namespace Backend.Services.Implementations;
 
-public class OrderService : CrudService<Order>, IOrderService
+public class OrderService : CrudService<OrderDto, Order, OrderCreateDto, OrderUpdateDto>, IOrderService
 {
     private readonly ApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public OrderService(ApplicationDbContext context) : base(context, context.Orders)
+    public OrderService(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
-    public async Task<List<Order>> GetByCustomerAsync(int customerId)
+
+    async Task<List<OrderDto>?> IOrderService.GetByProductAsync(int productId)
     {
         try
         {
-            return await _context.Orders.Where(x => x.Customer != null && x.Customer.Id == customerId).ToListAsync();
+            var orders = await _context.Orders
+                .Include(x => x.OrderItems)
+                .Where(x => x.OrderItems.Any(y => y.ProductId == productId))
+                .ToListAsync();
+            return _mapper.Map<List<OrderDto>>(orders);
         }
         catch (Exception e)
         {
@@ -22,11 +29,13 @@ public class OrderService : CrudService<Order>, IOrderService
         }
     }
 
-    public async Task<List<Order>> GetByProductAsync(int productId)
+    async Task<List<OrderDto>> IOrderService.GetByCustomerAsync(int customerId)
     {
         try
         {
-            return await _context.Orders.Where(x => x.Products.Any(p => p.Id == productId)).ToListAsync();
+            var orders = await _context.Orders.Where(x => x.CustomerId == customerId).ToListAsync();
+
+            return _mapper.Map<List<OrderDto>>(orders) ?? [];
         }
         catch (Exception e)
         {

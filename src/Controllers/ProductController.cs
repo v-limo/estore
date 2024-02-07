@@ -1,72 +1,25 @@
 namespace Backend.Controllers;
 
-[ApiController]
-[Route("api/v1/[controller]s")]
-public class ProductController(IProductService productService) : ControllerBase
+public class ProductController : CrudController<ProductDto, ProductCreateDto, ProductUpdateDto>
 {
-    [HttpPost]
-    public async Task<ActionResult<Product>?> CreateProduct(Product? product)
+    private readonly IProductService _productService;
+
+    public ProductController(IProductService productService) : base(productService)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        if (product != null)
-        {
-            var createdProduct = await productService.CreateAsync(product);
-
-            if (createdProduct != null) return CreatedAtAction(nameof(GetProduct), new { createdProduct.Id }, product);
-        }
-
-        return null;
+        _productService = productService;
     }
 
-
-    [HttpGet]
-    public async Task<IEnumerable<Product>> GetProducts()
+    [HttpGet("search")]
+    [AllowAnonymous]
+    public async Task<ActionResult<List<Product>>> Get([FromQuery] string name)
     {
-        return await productService.GetAllAsync();
+        return Ok(await _productService.GetByNameAsync(name));
     }
 
-
-    [HttpGet("{productId:int}")]
-    public async Task<ActionResult<Product?>> GetProduct(int productId)
+    [HttpGet("/review{productId:int}")]
+    [AllowAnonymous]
+    public async Task<ActionResult<int>> GetReviewAverage(int productId)
     {
-        var product = await productService.GetByIdAsync(productId);
-        return product;
-    }
-
-
-    [HttpPut("{productId:int}")]
-    public async Task<ActionResult<Product>> UpdateProduct(int productId, Product product)
-    {
-        if (productId != product.Id || !ModelState.IsValid)
-            return BadRequest(
-                new
-                {
-                    Message = "Product Id mismatch or invalid data",
-                    ProductId = productId,
-                    status = StatusCodes.Status400BadRequest
-                }
-            );
-
-        var updateProduct = await productService.UpdateAsync(productId, product);
-        if (updateProduct is null)
-            return NotFound(
-                new { Message = "Product not found so cannot update", ProductId = productId }
-            );
-        return product;
-    }
-
-
-    [HttpDelete("{productId:int}")]
-    public async Task<ActionResult<bool>> DeleteProduct(int productId)
-    {
-        var result = await productService.DeleteAsync(productId);
-        if (!result)
-            return NotFound(
-                new { Message = "Product not found so cannot delete", ProductId = productId }
-            );
-        // return result; ////alternativly
-        return NoContent();
+        return Ok(await _productService.GetReviewAverageAsync(productId));
     }
 }

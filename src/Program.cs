@@ -6,6 +6,9 @@ builder.Services.AddCustomSwaggerGens();
 builder.Services.AddCustomCors(builder.Environment, builder.Configuration);
 builder.Services.AddAppDbContext(builder.Configuration);
 
+builder.Services.AddScoped<GlobalErrorMiddleWare>();
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddCustomAuthorization();
 
@@ -14,8 +17,6 @@ builder.Services.AddCustomIdentity();
 
 builder.Services.AddCustomRouting();
 builder.Services.AddControllers();
-
-builder.Services.AddTransient<GlobalErrorMiddleWare>();
 
 var app = builder.Build();
 
@@ -27,6 +28,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseMiddleware<GlobalErrorMiddleWare>();
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();

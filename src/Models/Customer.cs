@@ -1,8 +1,8 @@
 namespace Backend.Models;
 
-public class Customer
+public class Customer : BaseClass
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public IEnumerable<Order> Orders { get; set; }
+    [MaxLength(25)] public string Name { get; set; } = null!;
+
+    public IEnumerable<Order> Orders { get; set; } = null!;
 }

@@ -1,8 +1,14 @@
 namespace Backend.Models;
 
-public class Order
+public class Order : BaseClass
+{
+    public int CustomerId { get; set; }
+    public IEnumerable<OrderItem> OrderItems { get; set; } = [];
+}
+
+public class OrderItem
 {
     public int Id { get; set; }
-    public Customer? Customer { get; set; }
-    public List<Product> Products { get; set; } = [];
+    public int? ProductId { get; set; }
+    public int Quantity { get; set; }
 }
