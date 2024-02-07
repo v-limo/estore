@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Backend.Migrations
+namespace EStoreAPI.Migrations
 {
     /// <inheritdoc />
     public partial class ASPIdentity3 : Migration

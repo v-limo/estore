@@ -1,4 +1,4 @@
-namespace Backend.Models;
+namespace EStoreAPI.Models;
 
 public class ApplicationUser : IdentityUser
 {

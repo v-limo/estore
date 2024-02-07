@@ -1,4 +1,4 @@
-namespace Backend.Data.Seeding;
+namespace EStoreAPI.Data.Seeding;
 
 public class DataSeed
 {

@@ -1,4 +1,4 @@
-namespace Backend.Profile;
+namespace EStoreAPI.Profile;
 
 public class MappingProfile : AutoMapper.Profile
 {

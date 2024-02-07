@@ -1,4 +1,4 @@
-namespace Backend.Services.Contracts;
+namespace EStoreAPI.Services.Contracts;
 
 public interface ICrudService<TDto, TCreateDto, in TUpdateDto> where TCreateDto : class
     where TUpdateDto : class

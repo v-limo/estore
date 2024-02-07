@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Backend.Migrations
+namespace EStoreAPI.Migrations
 {
     /// <inheritdoc />
     public partial class SeparateAPInTests : Migration

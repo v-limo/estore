@@ -1,4 +1,4 @@
-namespace Backend.Models;
+namespace EStoreAPI.Models;
 
 public enum Role
 {

@@ -1,4 +1,4 @@
-namespace Backend.Middleware;
+namespace EStoreAPI.Middleware;
 
 public class GlobalErrorMiddleWare(ILogger<GlobalErrorMiddleWare> logger) : IMiddleware
 {

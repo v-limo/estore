@@ -1,4 +1,4 @@
-namespace Backend.Data;
+namespace EStoreAPI.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {

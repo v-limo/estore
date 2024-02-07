@@ -1,4 +1,4 @@
-namespace Backend.Extensions;
+namespace EStoreAPI.Extensions;
 
 public static class ServiceExtension
 {

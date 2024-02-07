@@ -1,4 +1,4 @@
-namespace Backend.Services.Implementations;
+namespace EStoreAPI.Services.Implementations;
 
 public class CustomerService :
     CrudService<CustomerDto, Customer, CustomerCreateDto, CustomerUpdateDto>, ICustomerService

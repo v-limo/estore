@@ -1,4 +1,4 @@
-namespace Backend.Controllers;
+namespace EStoreAPI.Controllers;
 
 public class CategoryController : CrudController<CategoryDto, CategoryCreateDto, CategoryUpdateDto>
 {
