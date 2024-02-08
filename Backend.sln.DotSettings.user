@@ -1,6 +1,0 @@
-﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=098C6FA2_002D0AD6_002D4DB6_002DA189_002D6F70D6E3362B_002Fd_003Asrc_002Fd_003AData_002Ff_003AApplicationDBContext_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
-	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=098C6FA2_002D0AD6_002D4DB6_002DA189_002D6F70D6E3362B_002Fd_003Asrc_002Fd_003AModels_002Ff_003ABaseModel_002Ecs/@EntryIndexedValue">ExplicitlyExcluded</s:String>
-	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;
-  &lt;Assembly Path="/Users/vincentlimo/.nuget/packages/microsoft.aspnetcore.openapi/8.0.0/lib/net8.0/Microsoft.AspNetCore.OpenApi.dll" /&gt;
-&lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>
