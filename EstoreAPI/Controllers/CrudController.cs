@@ -65,7 +65,6 @@ public abstract class CrudController<TDto, TCreate, TUpdate> : ApiControllerBase
             return NotFound(
                 new { Message = "Entity not found so cannot update", Id = id }
             );
-
         return updatedEntity;
     }
 

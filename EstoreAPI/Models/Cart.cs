@@ -6,7 +6,7 @@ public class Cart : BaseClass
     public IEnumerable<CartItem>? CartItems { get; set; }
 }
 
-public class CartItem
+public class CartItem : IIdentifiable
 {
     public int Id { get; set; }
     public int ProductId { get; set; }

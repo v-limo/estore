@@ -6,7 +6,7 @@ public class Order : BaseClass
     public IEnumerable<OrderItem> OrderItems { get; set; } = [];
 }
 
-public class OrderItem
+public class OrderItem : IIdentifiable
 {
     public int Id { get; set; }
     public int? ProductId { get; set; }
