@@ -1,15 +1,9 @@
 namespace EStoreAPI.Services.Implementations;
 
-public class AuthService : IAuthService
+public class AuthService(UserManager<ApplicationUser> userManager, IConfiguration configuration)
+    : IAuthService
 {
-    private readonly IConfiguration _configuration; //TODO: use ioptions
-    private readonly UserManager<ApplicationUser> _userManager;
-
-    public AuthService(UserManager<ApplicationUser> userManager, IConfiguration configuration)
-    {
-        _userManager = userManager;
-        _configuration = configuration;
-    }
+    //TODO: use options
 
     public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
     {
@@ -22,7 +16,7 @@ public class AuthService : IAuthService
                 // Role = request.Role ?? Role.User //Todo: make a normal user.
                 Role = Role.Admin // Todo
             };
-            var result = await _userManager.CreateAsync(user, request.Password);
+            var result = await userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded)
                 return new AuthResponse
                 {
@@ -51,7 +45,7 @@ public class AuthService : IAuthService
     {
         try
         {
-            var user = await _userManager.FindByEmailAsync(request.Email);
+            var user = await userManager.FindByEmailAsync(request.Email);
             if (user == null)
                 return new AuthResponse
                 {
@@ -60,7 +54,7 @@ public class AuthService : IAuthService
                     Token = null,
                     RefreshToken = null
                 };
-            var result = await _userManager.CheckPasswordAsync(user, request.Password);
+            var result = await userManager.CheckPasswordAsync(user, request.Password);
             if (!result)
                 return new AuthResponse
                 {
@@ -89,7 +83,7 @@ public class AuthService : IAuthService
         try
         {
             await Task.Delay(1000);
-            var user = await _userManager.FindByEmailAsync(""); //TODO: get user
+            var user = await userManager.FindByEmailAsync(""); //TODO: get user
             return new AuthResponse
             {
                 Success = true,
@@ -125,7 +119,7 @@ public class AuthService : IAuthService
     {
         try
         {
-            var appUser = await _userManager.FindByIdAsync(userId ?? "");
+            var appUser = await userManager.FindByIdAsync(userId ?? "");
             if (appUser == null) return null;
             return new UserProfile
             {
@@ -142,9 +136,9 @@ public class AuthService : IAuthService
 
     private string? GenerateToken(ApplicationUser user)
     {
-        var validIssuer = _configuration.GetSection("BearerAuthentication:ValidIssuer").Value!;
-        var validAudiences = _configuration.GetSection("BearerAuthentication:ValidAudiences").Value;
-        var secret = _configuration.GetSection("BearerAuthentication:Secret").Value!;
+        var validIssuer = configuration.GetSection("BearerAuthentication:ValidIssuer").Value!;
+        var validAudiences = configuration.GetSection("BearerAuthentication:ValidAudiences").Value;
+        var secret = configuration.GetSection("BearerAuthentication:Secret").Value!;
 
         if (string.IsNullOrEmpty(validIssuer) || string.IsNullOrEmpty(validAudiences) || string.IsNullOrEmpty(secret) ||
             user.Email == null)

@@ -1,15 +1,10 @@
 namespace EStoreAPI.Services.Implementations;
 
-public class OrderService : CrudService<OrderDto, Order, OrderCreateDto, OrderUpdateDto>, IOrderService
+public class OrderService(ApplicationDbContext context, IMapper mapper)
+    : CrudService<OrderDto, Order, OrderCreateDto, OrderUpdateDto>(context, mapper), IOrderService
 {
-    private readonly ApplicationDbContext _context;
-    private readonly IMapper _mapper;
-
-    public OrderService(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
+    private readonly ApplicationDbContext _context = context;
+    private readonly IMapper _mapper = mapper;
 
 
     async Task<List<OrderDto>?> IOrderService.GetByProductAsync(int productId)

@@ -1,15 +1,10 @@
 namespace EStoreAPI.Services.Implementations;
 
-public class ReviewService : CrudService<ReviewDto, Review, ReviewCreateDto, ReviewUpdateDto>, IReviewService
+public class ReviewService(ApplicationDbContext context, IMapper mapper)
+    : CrudService<ReviewDto, Review, ReviewCreateDto, ReviewUpdateDto>(context, mapper), IReviewService
 {
-    private readonly ApplicationDbContext _context;
-    private readonly IMapper _mapper;
-
-    public ReviewService(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
+    private readonly ApplicationDbContext _context = context;
+    private readonly IMapper _mapper = mapper;
 
     async Task<List<ReviewDto>> IReviewService.GetReviewsByUserId(int userId)
     {

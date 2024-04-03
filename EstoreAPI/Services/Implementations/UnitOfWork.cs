@@ -1,35 +1,28 @@
 namespace EStoreAPI.Services.Implementations;
 
-public class UnitOfWork : IUnitOfWork, IDisposable
+public class UnitOfWork(
+    DbContext context,
+    ICategoryService categoryService,
+    IProductService productService,
+    IOrderService orderService,
+    ICustomerService customerService,
+    IReviewService reviewService)
+    : IUnitOfWork, IDisposable
 {
-    private readonly ApplicationDbContext _context;
-
-    public UnitOfWork(ApplicationDbContext context, ICategoryService categoryService, IProductService productService,
-        IOrderService orderService, ICustomerService customerService, IReviewService reviewService)
-    {
-        _context = context;
-        CategoryService = categoryService;
-        ProductService = productService;
-        OrderService = orderService;
-        CustomerService = customerService;
-        ReviewService = reviewService;
-    }
-
-
     public void Dispose()
     {
-        _context.Dispose();
+        context.Dispose();
     }
 
 
-    public ICategoryService CategoryService { get; }
-    public IProductService ProductService { get; }
-    public IOrderService OrderService { get; }
-    public ICustomerService CustomerService { get; }
-    public IReviewService ReviewService { get; }
+    public ICategoryService CategoryService { get; } = categoryService;
+    public IProductService ProductService { get; } = productService;
+    public IOrderService OrderService { get; } = orderService;
+    public ICustomerService CustomerService { get; } = customerService;
+    public IReviewService ReviewService { get; } = reviewService;
 
     public async Task<bool> SaveChangesAsync()
     {
-        return await _context.SaveChangesAsync() > 0;
+        return await context.SaveChangesAsync() > 0;
     }
 }

@@ -1,15 +1,10 @@
 namespace EStoreAPI.Services.Implementations;
 
-public class ProductService : CrudService<ProductDto, Product, ProductCreateDto, ProductUpdateDto>, IProductService
+public class ProductService(ApplicationDbContext context, IMapper mapper)
+    : CrudService<ProductDto, Product, ProductCreateDto, ProductUpdateDto>(context, mapper), IProductService
 {
-    private readonly ApplicationDbContext _context;
-    private readonly IMapper _mapper;
-
-    public ProductService(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
+    private readonly ApplicationDbContext _context = context;
+    private readonly IMapper _mapper = mapper;
 
 
     public async Task<List<ProductDto>> GetByNameAsync(string name)
