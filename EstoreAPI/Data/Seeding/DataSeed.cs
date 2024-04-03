@@ -4,9 +4,9 @@ namespace EStoreAPI.Data.Seeding;
 
 public class DataSeed
 {
-    private readonly int _productAmount;
     private static List<Product> _products = [];
     private static List<Category> _categories = [];
+    private readonly int _productAmount;
 
     public DataSeed(int productsAmount = 100)
     {
@@ -39,11 +39,11 @@ public class DataSeed
     {
         var productId = 1;
         var productFaker = new Faker<Product>()
-            .RuleFor(p => p.Id, (f) => productId++)
-            .RuleFor(p => p.Name, (f) => f.Commerce.ProductName())
-            .RuleFor(p => p.Price, (f) => decimal.Parse(f.Commerce.Price()))
-            .RuleFor(p => p.CreatedAt, (f) => f.PickRandom(DateTime.MaxValue))
-            .RuleFor(p => p.CategoryId, (f) => f.PickRandom(_categories).Id);
+            .RuleFor(p => p.Id, f => productId++)
+            .RuleFor(p => p.Name, f => f.Commerce.ProductName())
+            .RuleFor(p => p.Price, f => decimal.Parse(f.Commerce.Price()))
+            .RuleFor(p => p.CreatedAt, f => f.PickRandom(DateTime.MaxValue))
+            .RuleFor(p => p.CategoryId, f => f.PickRandom(_categories).Id);
         _products = productFaker.Generate(_productAmount);
     }
 

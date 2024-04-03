@@ -2,9 +2,9 @@ namespace EStoreAPI.DTOs;
 
 public class CartDto : IIdentifiable
 {
-    public int Id { get; set; }
     public int UserId { get; set; }
     public IEnumerable<CartItemDto> CartItems { get; set; } = [];
+    public int Id { get; set; }
 }
 
 public class CartCreateDto

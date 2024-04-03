@@ -4,11 +4,10 @@ namespace EstoreTest;
 
 public class UnitTest
 {
-
     public UnitTest()
     {
-
     }
+
     [Fact]
     public void Test1()
     {
