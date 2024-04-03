@@ -30,8 +30,4 @@
         <ProjectReference Include="..\EstoreAPI\EstoreAPI.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-      <Content Include=".github\workflows\code_quality.yml" />
-    </ItemGroup>
-
 </Project>
