@@ -1,17 +1,12 @@
 namespace EStoreAPI.Services.Implementations;
 
-public class CategoryService : CrudService<CategoryDto, Category, CategoryCreateDto, CategoryUpdateDto>,
-    ICategoryService
+public class CategoryService(ApplicationDbContext context, IMapper mapper)
+    : CrudService<CategoryDto, Category, CategoryCreateDto, CategoryUpdateDto>(context, mapper),
+        ICategoryService
 {
-    private readonly ApplicationDbContext _context;
-    private readonly IMapper _mapper;
+    private readonly ApplicationDbContext _context = context;
+    private readonly IMapper _mapper = mapper;
 
-
-    public CategoryService(ApplicationDbContext context, IMapper mapper) : base(context, mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
 
     public async Task<List<CategoryDto>> GetCategoriesByName(string name)
     {

@@ -25,7 +25,6 @@ public abstract class CrudController<TDto, TCreate, TUpdate>(ICrudService<TDto, 
         }, entity);
     }
 
-    [HttpGet]
     [AllowAnonymous]
     public async Task<IEnumerable<TDto?>> GetAll()
     {

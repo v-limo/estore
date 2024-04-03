@@ -1,6 +1,6 @@
 namespace EStoreAPI.Services.Contracts;
 
-public interface ICrudService<TDto, TCreateDto, in TUpdateDto> where TCreateDto : class
+public interface ICrudService<TDto, in TCreateDto, in TUpdateDto> where TCreateDto : class
     where TUpdateDto : class
 {
     Task<List<TDto>> GetAllAsync();

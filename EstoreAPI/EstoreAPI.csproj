@@ -28,7 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include=".github\workflows\code_quality.yml" />
+        <Content Include=".github\workflows\code_quality.yml"/>
     </ItemGroup>
 
 </Project>
