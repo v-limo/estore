@@ -9,11 +9,4 @@ public class ReviewController(IReviewService reviewService)
     {
         return await reviewService.GetReviewsByProductId(productId);
     }
-
-    [HttpGet("user/{userId:int}")]
-    [AllowAnonymous]
-    public async Task<IEnumerable<ReviewDto?>> GetReviewsByUserId(int userId)
-    {
-        return await reviewService.GetReviewsByUserId(userId);
-    }
 }

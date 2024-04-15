@@ -77,7 +77,6 @@ public static class ServiceExtension
         });
     }
 
-
     public static void AddJwtAuthentication(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         var validIssuer = configuration.GetSection("BearerAuthentication:ValidIssuer").Value!;
@@ -101,6 +100,7 @@ public static class ServiceExtension
                 ValidAudiences = validAudiences,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
             });
+        
     }
 
     public static void AddCustomAuthorization(this IServiceCollection serviceCollection)
