@@ -1,9 +1,8 @@
 namespace EStoreAPI.Controllers;
 
-[ApiController]
-[Route("api/v1/[controller]s")]
+[Route("api/v1/[controller]s[action]")]
 [Authorize(Roles = "Admin")]
-public abstract class CrudController<TDto, TCreate, TUpdate>(ICrudService<TDto, TCreate, TUpdate> crudService)
+public class CrudController<TDto, TCreate, TUpdate>(ICrudService<TDto, TCreate, TUpdate> crudService)
     : ApiControllerBase
     where TDto : class, IIdentifiable
     where TCreate : class
@@ -25,13 +24,15 @@ public abstract class CrudController<TDto, TCreate, TUpdate>(ICrudService<TDto, 
         }, entity);
     }
 
+    [HttpGet]
     [AllowAnonymous]
     public async Task<IEnumerable<TDto?>> GetAll()
     {
         return await crudService.GetAllAsync();
     }
 
-    [HttpGet("{id:int}")]
+    [HttpGet]
+    [Route("{id:int}")]
     [AllowAnonymous]
     public async Task<ActionResult<TDto?>> Get(int id)
     {
@@ -39,7 +40,8 @@ public abstract class CrudController<TDto, TCreate, TUpdate>(ICrudService<TDto, 
         return entity;
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPut]
+    [Route("{id:int}")]
     public async Task<ActionResult<TDto>> Update(int id, TUpdate entity)
     {
         if (!ModelState.IsValid || entity.Id != id)
@@ -60,7 +62,8 @@ public abstract class CrudController<TDto, TCreate, TUpdate>(ICrudService<TDto, 
         return updatedEntity;
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete]
+    [Route("{id:int}")]
     public async Task<ActionResult<bool>> Delete(int id)
     {
         var deleted = await crudService.DeleteAsync(id);

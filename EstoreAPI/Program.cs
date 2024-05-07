@@ -4,12 +4,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCustomSwaggerGens();
 
 builder.Services.AddCustomCors(builder.Environment, builder.Configuration);
-builder.Services.AddAppDbContext(builder.Configuration);
+
+// builder.Services.AddAppDbContextSqLite(builder.Configuration);
+// builder.Services.AddAppDbContextPostgresDocker(builder.Configuration);
+builder.Services.AddAppDbContextPostgresLocal(builder.Configuration);
 
 builder.Services.AddScoped<GlobalErrorMiddleWare>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddJWTAuthentication(builder.Configuration);
 builder.Services.AddCustomAuthorization();
 
 builder.Services.AddAppServices();

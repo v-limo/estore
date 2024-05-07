@@ -69,7 +69,7 @@ public static class ServiceExtension
         serviceCollection.AddScoped<IAuthService, AuthService>();
     }
 
-    public static void AddAppDbContext(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static void AddAppDbContextSqLite(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         serviceCollection.AddDbContext<ApplicationDbContext>(options =>
         {
@@ -77,7 +77,25 @@ public static class ServiceExtension
         });
     }
 
-    public static void AddJwtAuthentication(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static void AddAppDbContextPostgresDocker(this IServiceCollection serviceCollection,
+        IConfiguration configuration)
+    {
+        serviceCollection.AddDbContext<ApplicationDbContext>(options =>
+        {
+            options.UseSqlite(configuration.GetConnectionString("SqliteConnection"));
+        });
+    }
+
+    public static void AddAppDbContextPostgresLocal(this IServiceCollection serviceCollection,
+        IConfiguration configuration)
+    {
+        serviceCollection.AddDbContext<ApplicationDbContext>(options =>
+        {
+            options.UseNpgsql(configuration.GetConnectionString("LocalConnection")).UseSnakeCaseNamingConvention();
+        });
+    }
+
+    public static void AddJWTAuthentication(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         var validIssuer = configuration.GetSection("BearerAuthentication:ValidIssuer").Value!;
         var validAudiences =
@@ -100,7 +118,6 @@ public static class ServiceExtension
                 ValidAudiences = validAudiences,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
             });
-        
     }
 
     public static void AddCustomAuthorization(this IServiceCollection serviceCollection)

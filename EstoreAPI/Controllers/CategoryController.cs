@@ -3,7 +3,8 @@ namespace EStoreAPI.Controllers;
 public class CategoryController(ICategoryService categoryService)
     : CrudController<CategoryDto, CategoryCreateDto, CategoryUpdateDto>(categoryService)
 {
-    [HttpGet("search")]
+    [HttpGet]
+    [Route("search")]
     [AllowAnonymous]
     public async Task<ActionResult<List<CategoryDto>>?> SearchCategories(string name)
     {

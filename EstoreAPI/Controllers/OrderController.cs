@@ -1,27 +1,19 @@
-// namespace EStoreAPI.Controllers;
-//
-// public class OrderController
-//     : CrudController<OrderDto, OrderCreateDto, OrderUpdateDto>
-// {
-//     public OrderController(IOrderService orderService) : base(orderService)
-//     {
-//         _orderService = orderService;
-//     }
-//
-//     private readonly IOrderService _orderService;
-//
-//     [HttpGet("customerss/{customerId:int}")]
-//     public async Task<ActionResult<List<Order>>> GetByCustomerAsync(int customerId)
-//     {
-//         var orders = await _orderService.GetByCustomerAsync(customerId);
-//         return Ok(orders);
-//     }
-//
-//     [HttpGet("productss/{productId:int}")]
-//     public async Task<ActionResult<List<Order>>> GetByProductAsync(int productId)
-//     {
-//         var orders = await _orderService.GetByProductAsync(productId);
-//         return Ok(orders);
-//     }
-// }
+namespace EStoreAPI.Controllers;
 
+public class OrderController(IOrderService orderService)
+    : CrudController<OrderDto, OrderCreateDto, OrderUpdateDto>(orderService)
+{
+    [HttpGet("customerss/{customerId:int}")]
+    public async Task<ActionResult<List<Order>>> GetByCustomerAsync(int customerId)
+    {
+        var orders = await orderService.GetByCustomerAsync(customerId);
+        return Ok(orders);
+    }
+
+    [HttpGet("productss/{productId:int}")]
+    public async Task<ActionResult<List<Order>>> GetByProductAsync(int productId)
+    {
+        var orders = await orderService.GetByProductAsync(productId);
+        return Ok(orders);
+    }
+}

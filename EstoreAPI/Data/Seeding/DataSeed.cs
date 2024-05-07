@@ -39,7 +39,7 @@ public class DataSeed
     {
         var productId = 1;
         var productFaker = new Faker<Product>()
-            .RuleFor(p => p.Id, f => productId++)
+            .RuleFor(p => p.Id, _ => productId++)
             .RuleFor(p => p.Name, f => f.Commerce.ProductName())
             .RuleFor(p => p.Price, f => decimal.Parse(f.Commerce.Price()))
             .RuleFor(p => p.CreatedAt, f => f.PickRandom(DateTime.MaxValue))

@@ -15,7 +15,7 @@ public class TestController : ControllerBase
         IEnumerable<Product> products = _dataSeed.SeedProduct();
 
         var totalPages = (int)Math.Ceiling((decimal)products.Count() / pageSize);
-
+        Console.WriteLine(_dataSeed.SeedProduct());
         var response = new PaginatedResponse<Product>
         {
             PageNumber = pageNumber,
