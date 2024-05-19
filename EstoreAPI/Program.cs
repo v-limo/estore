@@ -1,4 +1,5 @@
 var builder = WebApplication.CreateBuilder(args);
+var assembly = typeof(Program).Assembly;
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCustomSwaggerGens();
@@ -10,7 +11,7 @@ builder.Services.AddCustomCors(builder.Environment, builder.Configuration);
 builder.Services.AddAppDbContextPostgresLocal(builder.Configuration);
 
 builder.Services.AddScoped<GlobalErrorMiddleWare>();
-builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddAutoMapper(assembly);
 
 builder.Services.AddJWTAuthentication(builder.Configuration);
 builder.Services.AddCustomAuthorization();

@@ -7,17 +7,20 @@ public class CrudService<TDto, TEntity, TCreateDto, TUpdateDto> : ICrudService<T
 {
     private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
+    // private readonly DbSet<TEntity> _dbSet;
 
     protected CrudService(ApplicationDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
+        // _dbSet = dbSet;
     }
 
     public virtual async Task<List<TDto>> GetAllAsync()
     {
         try
         {
+            // var entities = await _dbSet.ToListAsync();
             var entities = await _context.Set<TEntity>().ToListAsync();
             return _mapper.Map<List<TDto>>(entities) ?? [];
         }
@@ -32,6 +35,7 @@ public class CrudService<TDto, TEntity, TCreateDto, TUpdateDto> : ICrudService<T
     {
         try
         {
+            // Todo : use the dbset 
             var entity = await _context.Set<TEntity>().FindAsync(id);
             return entity is not null ? _mapper.Map<TDto>(entity) : default;
         }
@@ -46,6 +50,7 @@ public class CrudService<TDto, TEntity, TCreateDto, TUpdateDto> : ICrudService<T
     {
         try
         {
+            // Todo : use the db set 
             var entity = _mapper.Map<TEntity>(model);
             if (entity == null) return default;
             _context.Set<TEntity>().Add(entity);
@@ -63,6 +68,7 @@ public class CrudService<TDto, TEntity, TCreateDto, TUpdateDto> : ICrudService<T
     {
         try
         {
+            // Todo : use the db set 
             var entity = await _context.Set<TEntity>().FindAsync(id);
 
             if (entity == null) return default;
@@ -85,6 +91,7 @@ public class CrudService<TDto, TEntity, TCreateDto, TUpdateDto> : ICrudService<T
     {
         try
         {
+            // Todo : use the db set 
             var entity = await _context.Set<TEntity>().FindAsync(id);
             if (entity == null) return false;
             _context.Set<TEntity>().Remove(entity);
